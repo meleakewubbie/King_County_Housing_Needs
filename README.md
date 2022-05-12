@@ -16,21 +16,22 @@ This week, you need to revise your proposal based on the feedback from the TAs a
     * ii. the supporting data sets for each thematic map layer.
     * iii. vector or raster layer. If it is a vector, which data attribute to use? If raster, which zoom level and presumed boundingbox to use?
     * proposed interactive functions
-* Option two: Smart dashboard
-   * respond to all the items listed in the option one
-    How to arrange all the components on the graphical user interface (GUI)?
-    What are the coordinated charts you plan to make?
-    i. javascript that supports the making of a chart.
-    ii. type of chart (e.g., line, bar, pie, etc.)
-    iii. data attributes to be visualized.
-Option three: Geo-narrative/Storymap
-respond to all the items listed in the option one
-draft the storyline
-for each scene/action, describe the following items in detail:
-i. the map you plan to draw
-ii. the associated script
-iii. the multimedia (e.g., image, video, chart, external links, etc)
-how would you transit from one scene/action to another one? like, fly from one location to another, zoom in or zoom out?
+  * Option two: Smart dashboard
+    * respond to all the items listed in the option one
+     How to arrange all the components on the graphical user interface (GUI)?
+     What are the coordinated charts you plan to make?
+     i. javascript that supports the making of a chart.
+     ii. type of chart (e.g., line, bar, pie, etc.)
+     iii. data attributes to be visualized.
+  * Option three: Geo-narrative/Storymap
+    * respond to all the items listed in the option one
+    * draft the storyline
+    * for each scene/action, describe the following items in detail:
+      * i. the map you plan to draw
+      * ii. the associated script
+      * iii. the multimedia (e.g., image, video, chart, external links, etc)
+    * how would you transit from one scene/action to another one? like, fly from one location to another, zoom in or zoom out?
+
 In the meantime, you should initiate your final project by completing the following items:
 
 create a GitHub repository
