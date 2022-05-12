@@ -1,4 +1,5 @@
 # King_County_Housing_Needs
+## Project Proposal
 This week, you need to revise your proposal based on the feedback from the TAs and the instructor. In the meantime, please conduct pilot studies in order to 1) test and/or fine-tune your proposed idea to a practical level and 2) detail specific project components. Once done, please share your revised proposal onto the discussion board. This deliverable should not be less than 300 words. Your revised proposal should have the following components.
 
 * project idea
