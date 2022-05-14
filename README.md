@@ -36,14 +36,14 @@ We will use an image on the homepage of our dashboard project to stress the hous
 We plan to use the Mapbox monochrome dark base map. 
 
 #### Description of the Thematic Layers
-###### The used visual strategies: choropleth, proportional symbols, etc:
+##### The used visual strategies: choropleth, proportional symbols, etc:
 - Single-family home sale prices will be visualized using a choropleth thematic layer. Median household income will be visualized using a proportional symbols thematic layer.
-###### The supporting data sets for each thematic map layer:
+##### The supporting data sets for each thematic map layer:
 - [Single-Family Home Sale Prices by Census Tract](https://data-seattlecitygis.opendata.arcgis.com/datasets/SeattleCityGIS::single-family-home-sale-prices-by-census-tract/explore?location=47.614125%2C-122.336870%2C10.89)
 - [Median Household Income by Census Tract in King County by Census Tract](https://gis-kingcounty.opendata.arcgis.com/datasets/kingcounty::median-household-income-1/explore?location=47.430392%2C-121.802498%2C10.67&showTable=true)
 - [Demographics of King County](https://gis-kingcounty.opendata.arcgis.com/datasets/kingcounty::demographic-base-demographic-base-area/explore?location=47.429699%2C-121.802498%2C10.11&showTable=true)
 
-###### Vector or raster layer. If it is a vector, which data attribute to use? If raster, which zoom level and presumed bounding box to use?
+##### Vector or raster layer. If it is a vector, which data attribute to use? If raster, which zoom level and presumed bounding box to use?
 We will have a vector layer and will use shape length and shape area of the census tracts as polygon boundaries.
 
 #### Proposed Interactive Functions
@@ -55,11 +55,11 @@ We will have a vector layer and will use shape length and shape area of the cens
 - [Figma Prototype](https://www.figma.com/file/EDlWdiztSAazwZ3pKoEPQg/GEOG-458?node-id=0%3A1)
 
 #### What are the coordinated charts you plan to make?
-###### Javascript that supports the making of a chart
+##### Javascript that supports the making of a chart
 We will be using C3.js in order to make the chart.
-###### Type of chart
+##### Type of chart
 Some bar charts and line charts will be created
-###### Data Attributes to be Visualized
+##### Data Attributes to be Visualized
 - A line graph will visualize the trend of average nominal price change and average nominal of single-family houses over the years. 
 - A bar graph will visualize the number of single-family house sales per year. 
 - The trend of the average sale price per square foot and average sale price per square foot change of single-family houses over the years.
