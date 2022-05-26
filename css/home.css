@@ -28,7 +28,7 @@
 
 .u-section-1 .u-image-1 {
   min-height: 625px;
-  background-image: url("img/for_rent.jpg");
+  background-image: url("/img/for_rent.jpg");
   background-position: 67.88% 50%;
 }
 
@@ -149,7 +149,7 @@
 
 .u-section-2 .u-image-1 {
   min-height: 655px;
-  background-image: url("img/for_rent2.jpg");
+  background-image: url("/img/for_rent2.jpg");
   background-position: 84.07% 50%;
 }
 
@@ -233,7 +233,7 @@
 
 .u-section-3 .u-image-1 {
   min-height: 315px;
-  background-image: url("img/seattle.jpg");
+  background-image: url("/img/seattle.jpg");
   background-position: 50% 50%;
 }
 
@@ -275,7 +275,7 @@
 
 .u-section-3 .u-image-2 {
   min-height: 315px;
-  background-image: url("img/note.jpg");
+  background-image: url("/img/note.jpg");
   background-position: 0% 43.82%;
 }
 
