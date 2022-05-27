@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="c3js/c3.css" rel="stylesheet">
     <meta charset="utf-8">
     <title>Median Contract Rent</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -65,6 +66,10 @@
           width: 10px;
           height: 10px;
           margin-right: 5px;
+      }
+
+      .c3-legend-item {
+          display: none;
       }
 
       .mapboxgl-canvas-container.mapboxgl-interactive,
@@ -179,6 +184,10 @@
                     item.appendChild(value);
                     legend.appendChild(item);
                 });
+                legend.innerHTML += '<small>Median Monthly Contract Rent by Census Tract and Population<small>'
+                legend.innerHTML += '<div id = "chart_median_rent"></div>';
+                 
+                median_rent_with_pop();
                 legend.innerHTML += source;
             });
 
@@ -194,5 +203,8 @@
         }
         geojsonFetch();
     </script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="c3js/c3.min.js"></script>
+    <script src = "js/charts.js"></script><div id = "chart_median_rent"></div>
 </body>
 </html>
