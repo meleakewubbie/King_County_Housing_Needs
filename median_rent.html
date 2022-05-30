@@ -41,23 +41,40 @@
 
       .map-overlay {
           position: absolute;
-          bottom: 0;
+          top: 0;
           left: 0;
-          background: rgba(255, 255, 255, 0.8);
-          border-style: solid;
-          border-width: 1px;
-          border-color: rgba(0, 0, 0, 0.2);
           margin-left: 20px;
           font-family: Arial, sans-serif;
           overflow: auto;
           border-radius: 3px;
+          margin-top: 32px;
+      }
+
+      #legend {
+          width: 350px;
+          display:block;
+
+          background: rgba(255, 255, 255, 0.8);
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgba(0, 0, 0, 0.2);
+          margin-top: 25px;
+          overflow-y: scroll;
+          height: 445px;
       }
 
       #features {
-          top: 40px;
+          /* top: 40px; */
           height: 125px;
-          margin-top: 20px;
+          /* margin-top: 20px; */
           width: 350px;
+          display:block;
+          margin-top: 25px;
+
+          background: rgba(255, 255, 255, 0.8);
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgba(0, 0, 0, 0.2);
       }
 
       .legend-key {
@@ -67,9 +84,13 @@
           height: 10px;
           margin-right: 5px;
       }
+      .kc_chart {
+          margin-left: 25px;
+
+      }
 
       .c3-legend-item {
-          display: none;
+          /* display: none; */
       }
 
       .mapboxgl-canvas-container.mapboxgl-interactive,
@@ -97,13 +118,17 @@
         </div>
     </nav>
     <div id="map"></div>
-    <div class='map-overlay' id='features'>
-        <h2>Median Monthly Contract Rent in King County by Census Tract</h2>
-        <div id='text-escription'>
-            <p>Choropleth Map Made by Huating Sun</p>
+    <!-- <div class='map-overlay' id='features'> -->
+    <div class="map-overlay"> <!-- Added this -->
+        <div id="features"> <!-- Added this -->
+            <h2>Median Monthly Contract Rent in King County by Census Tract</h2>
+            <div id='text-description'>
+                <p>Choropleth Map Made by Huating Sun</p>
+            </div> <!-- Added this -->
         </div>
+        <div id='legend'></div> <!-- Moved this, and modified -->
     </div>
-    <div class='map-overlay' id='legend'></div>
+    <!-- <div class='map-overlay' id='legend'></div> -->
     <script>
         mapboxgl.accessToken =
             'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
@@ -185,8 +210,11 @@
                     item.appendChild(value);
                     legend.appendChild(item);
                 });
-                legend.innerHTML += '<small>Median Monthly Contract Rent by Census Tract and Population<small>'
-                legend.innerHTML += '<div id = "chart_median_rent"></div>';
+                legend.innerHTML += '<hr>'
+                legend.innerHTML += '<small>Median Monthly Contract Rent by Race for King County</small>'
+                legend.innerHTML += '<br>'
+                legend.innerHTML += '<button class = "btn btn-secondary" id = "toggle_chart">show chart</button>'
+                legend.innerHTML += '<div class = "kc_chart" id = "chart_median_rent"></div>'
                  
                 median_rent_with_pop();
                 legend.innerHTML += source;
@@ -196,16 +224,16 @@
                 const tract = map.queryRenderedFeatures(point, {
                     layers: ['rentData-layer']
                 });
-                document.getElementById('text-escription').innerHTML = tract.length ?
+                document.getElementById('text-description').innerHTML = tract.length ?
                 `<h3>${"Census Tract:" + tract[0].properties.TRACT_LBL}</h3>
                 <p><strong>Median Monthly Contract Rent: $<em>${tract[0].properties.E25058232}</strong></em></p>` :
-                `<p>Place Mouse to See the Median Monthly Contract Rent for Each Census Tract in King County</p>`;
+                `<p>Hover Mouse Over Census Tract to Display Median Monthly Contract Rent in King County</p>`;
             });
         }
         geojsonFetch();
     </script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="c3js/c3.min.js"></script>
-    <script src = "js/charts.js"></script><div id = "chart_median_rent"></div>
+    <script src = "js/charts.js"></script>
 </body>
 </html>

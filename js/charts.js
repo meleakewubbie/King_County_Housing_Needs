@@ -1,5 +1,6 @@
 let chartdata = [];
 let populationdata = [];
+let chartIDs = [];
 function price_nom(){
     fetch("https://services.arcgis.com/ZOyb2t4B0UYuYNYH/arcgis/rest/services/Typology/FeatureServer/0/query?where=1%3D1&outFields=YEAR,PRICE_NOM&returnGeometry=false&outSR=4326&f=json")
         .then(response => {
@@ -199,7 +200,8 @@ fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census
 function median_rent_with_pop(){
 
     if(populationdata.length == 0){
-        fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census__acs/MapServer/2593/query?outFields=*&where=1%3D1&f=geojson")
+        //fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census__acs/MapServer/2593/query?outFields=*&where=1%3D1&f=geojson")
+        fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census___base/MapServer/2549/query?outFields=*&where=1%3D1&f=geojson")
         .then(response => {
             return response.json()
         })
@@ -228,50 +230,141 @@ function median_rent(){
             console.log(data);
             console.log(data.features[100])
             chartdata = [];
-            chartdata[0] = new Array("$0-$1115");
-            chartdata[1] = new Array("$1115-$1309");
-            chartdata[2] = new Array("$1309-$1476");
-            chartdata[3] = new Array("$1476-$1699");
-            chartdata[4] = new Array("$1699-$3309");
-            chartdata[5] = new Array("Missing Data");
-            //chartdata[0] = "Single Family Home Sales Prices"
+            chartdata[0] = new Array("White");
+            chartdata[1] = new Array("Asian");
+            chartdata[2] = new Array("Hispanic or Latino");
+            chartdata[3] = new Array("Black");
+            chartdata[4] = new Array("Native American");
+            chartdata[5] = new Array("Hawaiian");
+            chartdata[6] = new Array("Mixed");
+            chartdata[7] = new Array();
+            
+            for(let a = 0; a < chartdata.length - 1; a++){
+                for(let n = 0; n < 5; n++){
+                    chartdata[a].push(0);
+                }
+                chartdata[7][a] = chartdata[a][0]
+            }
+            chartdata[8] = ["$1115", "$1309", "$1476", "$1699", "$3309"]//, "Missing Data"]
+
+            totalTracts = [0, 0, 0, 0, 0]
+
+            console.log(populationdata[0].properties);
 
             //console.log(populationdata[100].properties);
             for(let i = 0; i < data.features.length; i++)
             {
                 let d = data.features[i].properties;
                 let rent = d.E25058232;
-                let num = 1;
-                //console.log(populationdata[i].properties.GEO_ID_TRT + "," + d.GEO_ID_TRT);
-                if(populationdata.length > 0){
-                    num = populationdata[i].properties.E01003097;
-                }
+                // let num = 1;
+                // //console.log(populationdata[i].properties.GEO_ID_TRT + "," + d.GEO_ID_TRT);
+                // if(populationdata.length > 0){
+                //     num = populationdata[i].properties.PWNH;
+                // }
+                let index = 5;
 
-                console.log()
-
-                if(rent == null || rent.length > 0){
-                    chartdata[5].push(num);
+                /*if(rent == null || rent.length > 0){
+                    index = 5;
+                    totalTracts[index]++;
                 }
-                else if(rent >= 0 && rent < 1115){
-                    chartdata[0].push(num);
+                else */if(rent >= 0 && rent < 1115){
+                    index = 0;
+                    totalTracts[index]++;
                 }
                 else if(rent >= 1115 && rent < 1309){
-                    chartdata[1].push(num);
+                    index = 1;
+                    totalTracts[index]++;
                 }
                 else if(rent >= 1309 && rent < 1476){
-                    chartdata[2].push(num);
+                    index = 2;
+                    totalTracts[index]++;
                 }
                 else if(rent >= 1476 && rent < 1699){
-                    chartdata[3].push(num);
+                    index = 3;
+                    totalTracts[index]++;
                 }
                 else if(rent >= 1699 && rent < 3309){
-                    chartdata[4].push(num);
+                    index = 4;
+                    totalTracts[index]++;
                 }
+                index++; // lazy fix
+
+                chartdata[0][index] += populationdata[i].properties.PWNH;
+                chartdata[1][index] += populationdata[i].properties.PANH;
+                chartdata[2][index] += 100 - populationdata[i].properties.PHL;
+                chartdata[3][index] += populationdata[i].properties.PBNH;
+                chartdata[4][index] += populationdata[i].properties.PAINH;
+                chartdata[5][index] += populationdata[i].properties.PHNH;
+                chartdata[6][index] += populationdata[i].properties.P2NH;
             }
+            
+            for(let r = 0; r < chartdata.length - 2; r++){
+                for(let b = 1; b < chartdata[r].length; b++){
+                    chartdata[r][b] /= totalTracts[b - 1];
+                }
+                chartdata[r].pop();
+            }
+
             console.log(chartdata);
-            pie_chart();
+            stacked_bar_chart();
+            // pie_chart();
         })
 }
+
+//stacked bar chart function for median rent 
+function stacked_bar_chart(){
+    let chartid = '#chart_median_rent'
+    var chart = c3.generate({
+        bindto: chartid,
+        data: {
+        columns: [
+            chartdata[0],
+            chartdata[1],
+            chartdata[2],
+            chartdata[3], 
+            chartdata[4], 
+            chartdata[5],
+            chartdata[6],
+        ],
+        type: 'bar',
+        groups: [
+            chartdata[7]
+        ]
+    },
+    axis: {
+        x: {
+            type: 'category',
+            categories: chartdata[8]
+        }
+    },
+    grid: {
+        y: {
+            lines: [{value:0}]
+        }
+    },
+    colors : {
+        "$0-$1115":"#FAFA6E",
+        "$1115-$1309":"#9CDF7C",
+        "$1309-$1476":"#4ABD8C",
+        "$1476-$1699":"#00968E",
+        "$1699-$3309":"#106E7C",
+        "Missing Data":"#A0A0A0"
+    },
+    size : {
+        width: 275
+    }
+});
+chart.load({
+    done: function(){
+
+document.getElementById("toggle_chart").addEventListener("click", toggle_chart)
+document.getElementById('chart_median_rent').style.display = "none"
+document.getElementById("toggle_chart").innerHTML = "show chart"
+chartIDs = Array('chart_median_rent')
+    }
+})
+}
+
 
 function pie_chart(){
     var chart = c3.generate({
@@ -296,3 +389,17 @@ function pie_chart(){
         }
     });
 }
+
+function toggle_chart(e){
+    for(let i = 0; i < chartIDs.length; i++){
+        let chart = document.getElementById(chartIDs[i])
+        if(chart.style.display == "block"){
+            chart.style.display= "none"
+            e.target.innerHTML = "show chart"
+        } else{
+            chart.style.display = "block"
+            e.target.innerHTML = "hide chart"
+        }
+    }
+}
+
