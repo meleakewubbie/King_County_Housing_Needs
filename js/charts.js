@@ -1,6 +1,7 @@
 let chartdata = [];
 let populationdata = [];
 let chartIDs = [];
+let extradata = [];
 function price_nom(){
     fetch("https://services.arcgis.com/ZOyb2t4B0UYuYNYH/arcgis/rest/services/Typology/FeatureServer/0/query?where=1%3D1&outFields=YEAR,PRICE_NOM&returnGeometry=false&outSR=4326&f=json")
         .then(response => {
@@ -403,3 +404,193 @@ function toggle_chart(e){
     }
 }
 
+//median income vs rent 
+function median_income_with_rent(){
+
+    if(extradata.length == 0){
+        //fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census__acs/MapServer/2593/query?outFields=*&where=1%3D1&f=geojson")
+        fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census__acs/MapServer/2450/query?outFields=*&where=1%3D1&f=geojson")
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            extradata = data.features;
+
+            median_income();
+        })
+    }
+}
+
+function median_income(){
+    let chart_colors = [
+      "rgb(250, 250, 110)",
+      "rgb(156, 223, 124)",
+      "rgb(74, 189, 140)",
+      "rgb(0, 150, 142)",
+      "rgb(16, 110, 124)",
+      "rgb(160, 160, 160)"
+    ];
+    fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census__demographic_base_area_esj/MapServer/25491201/query?outFields=*&where=1%3D1&f=geojson")
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            console.log(data);
+            console.log(data.features[100])
+            chartdata = [];
+            chartdata[0] = new Array("$1115");
+            chartdata[1] = new Array("$1309");
+            chartdata[2] = new Array("$1476");
+            chartdata[3] = new Array("$1699");
+            chartdata[4] = new Array("$3309");
+            chartdata[5] = new Array() // labels
+            
+            for(let a = 0; a < chartdata.length - 1; a++){
+                for(let n = 0; n < 5; n++){
+                    chartdata[a].push(0);
+                }
+                chartdata[5][a] = chartdata[a][0]
+            }
+            chartdata[6] = ["$63893", "$83875", "$100976", "$119527", "$222500"]//, "Missing Data"]
+
+            console.log(extradata[0].properties);
+
+            //console.log(populationdata[100].properties);
+            for(let i = 0; i < data.features.length; i++)
+            {
+                let d = data.features[i].properties;
+                let income = d.MHHI1;
+                let extra = extradata[i].properties;
+                let rent = extra.E25058232;
+                // let num = 1;
+                // //console.log(populationdata[i].properties.GEO_ID_TRT + "," + d.GEO_ID_TRT);
+                // if(populationdata.length > 0){
+                //     num = populationdata[i].properties.PWNH;
+                // }
+                let index = 5;
+
+                if(rent == null || rent.length > 0){
+                    continue;
+                }
+                else if(rent >= 0 && rent < 1115){
+                    index = 0;
+                }
+                else if(rent >= 1115 && rent < 1309){
+                    index = 1;
+                    
+                }
+                else if(rent >= 1309 && rent < 1476){
+                    index = 2;
+                    
+                }
+                else if(rent >= 1476 && rent < 1699){
+                    index = 3;
+                    
+                }
+                else if(rent >= 1699 && rent < 3309){
+                    index = 4;
+                    
+                }
+
+                let income_index = 5;
+
+                if(income == null || income.length > 0){
+                    continue;
+                }
+                else  if(income >= 0 && income < 63893){
+                    income_index = 0;
+                    
+                }
+                else if(income >= 63893 && income < 83875){
+                    income_index = 1;
+                    
+                }
+                else if(income >= 83875 && income < 100976){
+                    income_index = 2;
+                    
+                }
+                else if(income >= 100976 && income < 119527){
+                    income_index = 3;
+                    
+                }
+                else if(income >= 119527 && income < 222500){
+                    income_index = 4;
+                    
+                }
+                income_index++; // lazy fix
+
+                chartdata[index][income_index]++
+            }
+
+            console.log(chartdata);
+            stacked_bar_chart_mir();
+            // pie_chart();
+        })
+}
+
+//stacked bar chart for median income rent
+function stacked_bar_chart_mir(){
+    let chartid = '#chart_median_income'
+    var chart = c3.generate({
+        bindto: chartid,
+        data: {
+        columns: [
+            chartdata[0],
+            chartdata[1],
+            chartdata[2],
+            chartdata[3], 
+            chartdata[4],
+        ],
+        type: 'bar',
+        groups: [
+            chartdata[5]
+        ]
+    },
+    axis: {
+        x: {
+            type: 'category',
+            categories: chartdata[6]
+        }
+    },
+    grid: {
+        y: {
+            lines: [{value:0}]
+        }
+    },
+    colors : {
+        "$0-$1115":"#FAFA6E",
+        "$1115-$1309":"#9CDF7C",
+        "$1309-$1476":"#4ABD8C",
+        "$1476-$1699":"#00968E",
+        "$1699-$3309":"#106E7C",
+        "Missing Data":"#A0A0A0"
+    },
+    size : {
+        width: 275
+    }
+    });
+    chart.load({
+        done: function(){
+    
+    document.getElementById("toggle_chart").addEventListener("click", toggle_chart)
+    document.getElementById('chart_median_income').style.display = "none"
+    document.getElementById("toggle_chart").innerHTML = "show chart"
+    chartIDs = Array('chart_median_income')
+        }
+    })
+}
+
+
+// var chart = c3.generate({
+//     data: {
+//         // iris data from R
+//         columns: [
+//             ['data1', 1115 * 12],
+//             ['data2', 63893],
+//         ],
+//         type : 'pie',
+//         onclick: function (d, i) { console.log("onclick", d, i); },
+//         onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+//         onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+//     }
+// });

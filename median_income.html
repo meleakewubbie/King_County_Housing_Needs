@@ -13,6 +13,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/bootstrap_style.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css"/>
+    <link href="c3js/c3.css" rel="stylesheet">
   
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
     <style>
@@ -65,6 +66,19 @@
           width: 10px;
           height: 10px;
           margin-right: 5px;
+      }
+
+      #legend {
+          width: 350px;
+          display:block;
+
+          background: rgba(255, 255, 255, 0.8);
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgba(0, 0, 0, 0.2);
+          margin-top: 25px;
+          overflow-y: scroll;
+          height: 445px;
       }
 
       .mapboxgl-canvas-container.mapboxgl-interactive,
@@ -180,7 +194,15 @@
                     item.appendChild(value);
                     legend.appendChild(item);
                 });
+                legend.innerHTML += '<hr>'
+                legend.innerHTML += '<small>Median Estimated Yearly Contract Rent by Income for King County</small>'
+                legend.innerHTML += '<br>'
+                legend.innerHTML += '<button class = "btn btn-secondary" id = "toggle_chart">show chart</button>'
+                legend.innerHTML += '<div class = "kc_chart" id = "chart_median_income"></div>'
+                
+                median_income_with_rent();
                 legend.innerHTML += source;
+
             });
 
             map.on('mousemove', ({point}) => {
@@ -195,5 +217,8 @@
         }
         geojsonFetch();
     </script>
+     <script src="https://d3js.org/d3.v5.min.js"></script>
+     <script src="c3js/c3.min.js"></script>
+     <script src = "js/charts.js"></script>
 </body>
 </html>
