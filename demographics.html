@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="c3js/c3.css" rel="stylesheet">
     <meta charset="utf-8">
     <title>Population by Race in King County</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -40,23 +41,40 @@
 
       .map-overlay {
           position: absolute;
-          bottom: 0;
+          top: 0;
           left: 0;
-          background: rgba(255, 255, 255, 0.8);
-          border-style: solid;
-          border-width: 1px;
-          border-color: rgba(0, 0, 0, 0.2);
           margin-left: 20px;
           font-family: Arial, sans-serif;
           overflow: auto;
           border-radius: 3px;
+          margin-top: 32px;
+      }
+
+      #legend {
+          width: 350px;
+          display:block;
+
+          background: rgba(255, 255, 255, 0.8);
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgba(0, 0, 0, 0.2);
+          margin-top: 25px;
+          overflow-y: scroll;
+          height: 445px;
       }
 
       #features {
-          top: 40px;
+          /* top: 40px; */
           height: 125px;
-          margin-top: 20px;
+          /* margin-top: 20px; */
           width: 350px;
+          display:block;
+          margin-top: 25px;
+
+          background: rgba(255, 255, 255, 0.8);
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgba(0, 0, 0, 0.2);
       }
 
       .legend-key {
@@ -65,6 +83,10 @@
           width: 10px;
           height: 10px;
           margin-right: 5px;
+      }
+      .kc_chart {
+          margin-left: 25px;
+
       }
 
       .mapboxgl-canvas-container.mapboxgl-interactive,
@@ -92,13 +114,15 @@
         </div>
     </nav>
     <div id="map"></div>
-    <div class='map-overlay' id='features'>
-        <h2>Population by Race in King County by Census Tract</h2>
-        <div id='text-escription'>
-            <p>Choropleth Map Made by Huating Sun</p>
+    <div class="map-overlay"> <!-- Added this -->
+        <div id="features"> <!-- Added this -->
+            <h2>Population by Race in King County by Census Tract</h2>
+            <div id='text-escription'>
+                <p>Choropleth Map Made by Huating Sun</p>
+            </div> <!-- Added this -->
         </div>
+        <div id='legend'></div> <!-- Moved this, and modified -->
     </div>
-    <div class='map-overlay' id='legend'></div>
     <script>
         mapboxgl.accessToken =
             'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
@@ -180,6 +204,13 @@
                     item.appendChild(value);
                     legend.appendChild(item);
                 });
+                legend.innerHTML += '<hr>'
+                legend.innerHTML += '<small>Median Income by Non-White Tracts in King County</small>'
+                legend.innerHTML += '<br>'
+                legend.innerHTML += '<button class = "btn btn-secondary" id = "toggle_chart">show chart</button>'
+                legend.innerHTML += '<div class = "kc_chart" id = "chart_race_pop"></div>'
+                 
+                median_income_with_pop();
                 legend.innerHTML += source;
             });
 
@@ -213,5 +244,8 @@
         }
         geojsonFetch();
     </script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="c3js/c3.min.js"></script>
+    <script src = "js/charts.js"></script>
 </body>
 </html>

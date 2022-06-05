@@ -566,7 +566,7 @@ function stacked_bar_chart_mir(){
         "Missing Data":"#A0A0A0"
     },
     size : {
-        width: 275
+        width: 305
     }
     });
     chart.load({
@@ -594,3 +594,163 @@ function stacked_bar_chart_mir(){
 //         onmouseout: function (d, i) { console.log("onmouseout", d, i); }
 //     }
 // });
+function median_income_with_pop(){
+
+    if(populationdata.length == 0){
+        //fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census__acs/MapServer/2593/query?outFields=*&where=1%3D1&f=geojson")
+        fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census___base/MapServer/2549/query?outFields=*&where=1%3D1&f=geojson")
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            extradata = data.features;
+
+            median_income_for_pop();
+        })
+    }
+}
+
+function median_income_for_pop(){
+    let chart_colors = [
+      "rgb(250, 250, 110)",
+      "rgb(156, 223, 124)",
+      "rgb(74, 189, 140)",
+      "rgb(0, 150, 142)",
+      "rgb(16, 110, 124)",
+      "rgb(160, 160, 160)"
+    ];
+    fetch("https://gisdata.kingcounty.gov/arcgis/rest/services/OpenDataPortal/census__demographic_base_area_esj/MapServer/25491201/query?outFields=*&where=1%3D1&f=geojson")
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            console.log(data);
+            console.log(data.features[100])
+            chartdata = [];
+            chartdata[0] = new Array("$63893");
+            chartdata[1] = new Array("$83875");
+            chartdata[2] = new Array("$100976");
+            chartdata[3] = new Array("$119527");
+            chartdata[4] = new Array("$222500");
+            chartdata[5] = new Array() // labels
+            
+            for(let a = 0; a < chartdata.length - 1; a++){
+                for(let n = 0; n < 5; n++){
+                    chartdata[a].push(0);
+                }
+                chartdata[5][a] = chartdata[a][0]
+            }
+            chartdata[6] = ["1004", "1571", "2253", "3220", "6894"]//, "Missing Data"]
+
+            console.log(extradata[0].properties);
+
+            //console.log(populationdata[100].properties);
+            for(let i = 0; i < data.features.length; i++)
+            {
+                let d = data.features[i].properties;
+                let income = d.MHHI1;
+                let extra = extradata[i].properties;
+                let non_white = extra.TotalPopulation - extra.WhiteAlone;
+                // let num = 1;
+                // //console.log(populationdata[i].properties.GEO_ID_TRT + "," + d.GEO_ID_TRT);
+                // if(populationdata.length > 0){
+                //     num = populationdata[i].properties.PWNH;
+                // }
+                let index = 4;
+
+                if(non_white >= 0 && non_white < 1004){
+                    index = 0;
+                }
+                else if(non_white >= 1004 && non_white < 1571){
+                    index = 1;
+                    
+                }
+                else if(non_white >= 1571 && non_white < 2253){
+                    index = 2;
+                    
+                }
+                else if(non_white >= 2253 && non_white < 3320){
+                    index = 3;
+                    
+                }
+                index++;
+
+                let income_index = 4;
+
+                if(income == null || income.length > 0){
+                    continue;
+                }
+                else  if(income >= 0 && income < 63893){
+                    income_index = 0;
+                    
+                }
+                else if(income >= 63893 && income < 83875){
+                    income_index = 1;
+                    
+                }
+                else if(income >= 83875 && income < 100976){
+                    income_index = 2;
+                    
+                }
+                else if(income >= 100976 && income < 119527){
+                    income_index = 3;
+                    
+                }
+                else if(income >= 119527 && income < 222500){
+                    income_index = 4;
+                    
+                }
+
+                chartdata[income_index][index]++
+            }
+
+            console.log(chartdata);
+            stacked_bar_chart_mi_race();
+            // pie_chart();
+        })
+}
+
+function stacked_bar_chart_mi_race(){
+    let chartid = '#chart_race_pop'
+    var chart = c3.generate({
+        bindto: chartid,
+        data: {
+        columns: [
+            chartdata[0],
+            chartdata[1],
+            chartdata[2],
+            chartdata[3], 
+            chartdata[4],
+        ],
+        type: 'bar',
+        groups: [
+            chartdata[5]
+        ]
+    },
+    axis: {
+        x: {
+            type: 'category',
+            categories: chartdata[6]
+        }
+    },
+    grid: {
+        y: {
+            lines: [{value:0}]
+        }
+    },
+    size : {
+        width: 305
+    }
+    });
+    chart.load({
+        done: function(){
+    
+    document.getElementById("toggle_chart").addEventListener("click", toggle_chart)
+    document.getElementById('chart_race_pop').style.display = "none"
+    document.getElementById("toggle_chart").innerHTML = "show chart"
+    chartIDs = Array('chart_race_pop')
+        }
+    })
+}
+//stacked bar chart function for median rent 
+
