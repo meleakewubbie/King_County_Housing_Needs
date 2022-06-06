@@ -1,30 +1,23 @@
 # Housing Prices in King County, Washington
-## Project Idea
-The term gentrification is defined as the process of urban development in which a city neighborhood develops rapidly over a short time, changing from low to high value. The process of gentrification can bring a lot of benefits to a neighborhood, such as promoting physical and institutional improvements, reducing rates of crime, and providing additional economic opportunities. However, at the same time, gentrification raises questions about its health impacts on the residents who stayed or moved from their original neighborhoods due to the negative effects that gentrification brought, such as the loss of affordable housing and increased living costs. 
+## Project Introduction
+The term gentrification is defined as the process of urban development in which a city neighborhood develops rapidly over a short time, changing from low to high value. The process of gentrification can bring a lot of benefits to a neighborhood, such as promoting physical and institutional improvements, reducing rates of crime, and providing additional economic opportunities. However, simultaneously, gentrification raises concerns about its health impacts on long-time residents who stay or are forced to move from their original neighborhoods. This is due to the negative effects that gentrification can produce, such as the loss of affordable housing and increased living costs. Due to the lack of affordable housing in recent years, we want to research the distribution of rental prices across King County in Washington State. Specifically, we want to focus on comparing rental prices, median income levels, and population demographics. Based on the datasets found, the project will be based on the census tract level. The goal of this project is to provide our target audience with several informative map visualizations that will possibly influence city policies, development, and decision-making that will better serve current and future King County residents.
 
-Because of the increase in housing prices, we want to research the housing prices in King County in Washington State. Specifically, we want to focus on comparing housing prices, income levels, population demographics, and changes in housing prices over time. Based on the datasets found, the project will be based on the census tract level. The goal of this project is to provide our target audience with several informative map visualizations that will possibly influence city policies, development, and decision-making that will better serve current and future King County residents.
+## Project Goals
 
-## Project Significance and Broader Impacts
+- Provide basic rent prices information to local residents looking to rent, out-of-state employees looking to move into the city, and people looking to move to Seattle to start a family. 
 
-This project aims to provide basic housing prices information to local residents looking to buy houses, out-of-state employees looking to move into the city, and people looking to move to Seattle to start a family. Another important goal of this project is to bring awareness to the potential negative effects of gentrification on housing and provide an overview of the housing situation in King County, Washington so that the decision-makers can make relevant decisions to benefit the people with the current housing situation.
-
-One potentially negative impact of this project is that the type of housing for this project is single-family houses. It might confuse the audience with other housing types, such as multi-family houses or apartments. This can be avoided by clarifying the type of housing done in this project in the introduction portion.
-
-## Major Data Sources
-- [Single-Family Home Sale Prices by Census Tract](https://data-seattlecitygis.opendata.arcgis.com/datasets/SeattleCityGIS::single-family-home-sale-prices-by-census-tract/explore?location=47.614125%2C-122.336870%2C10.89)
-- [Median Household Income by Census Tract in King County by Census Tract](https://gis-kingcounty.opendata.arcgis.com/datasets/kingcounty::median-household-income-1/explore?location=47.430392%2C-121.802498%2C10.67&showTable=true)
-- [Demographics of King County](https://gis-kingcounty.opendata.arcgis.com/datasets/kingcounty::demographic-base-demographic-base-area/explore?location=47.429699%2C-121.802498%2C10.11&showTable=true)
+- Bring awareness to the potential negative effects of gentrification on housing and provide an overview of the rental situation in King County, Washington so that the decision-makers can make relevant decisions to benefit the people with the current housing situation.
 
 ## Primary Functions
-- Have a pop-up description when hovering over areas of interest to show the information such as demographics and home sale-related information.
-- Have a slider that will allow users to see the sing-family home sale prices from 2006 to 2019.
-- Have different thematic layers so that users can switch between to show relationships between various population demographics and housing prices.
+- Created an interactive hovering features that displays rent, income, and demographic information when the user is over a      given Census Tract. 
+- Display charts on each map's pop-out window to give additional context about the thematic layer.
+- Create multiple maps with different data to draw meaningful conclusions about the changes in the King County region.
 
 ## Target Audience
-The target audience for our projects is local residents looking to buy houses, out-of-state employees looking to move into the city, and people looking to move to Seattle to start a family. In addition, we want the policymakers to see this map to be aware of the rising housing costs in King County, Washington, and make relevant policies to benefit different demographic groups.
+The target audience for our projects is local residents looking for a place to rent, out-of-state employees looking to move into the city, and people looking to move to Seattle to start a family. In addition, we want the policymakers to see this map to be aware of the rising housing costs in King County, Washington, and make relevant policies to benefit different demographic groups.
 
-## Potential Multimedia
-We will use an image on the homepage of our dashboard project to stress the housing needs in the King County area. We will also include hyperlinks to the datasets we used on our 'data sources' page which will give users direct access to the open data portals we sourced the datasets from.
+## Multimedia
+We used an image on the homepage of our dashboard project to stress the housing needs in the King County area. We will also include hyperlinks to the datasets we used on our 'data sources' page which will give users direct access to the open data portals we sourced the datasets from.
 
 ## Project Format: Smart Dashboard
 #### Map Projection, Map Zoom Levels, Center.
@@ -33,22 +26,23 @@ We will use an image on the homepage of our dashboard project to stress the hous
 - The center of the map will be set at [47.4392,-121.7830]
 
 #### Description of the Basemap
-We plan to use the Mapbox monochrome dark base map. 
+We plan to use the Mapbox monochrome dark base map. This was inteded to mute uneccessary features add to the more bleak topic of our map project.
 
 #### Description of the Thematic Layers
 ##### The used visual strategies: choropleth, proportional symbols, etc:
-- Single-family home sale prices will be visualized using a choropleth thematic layer. Median household income will be visualized using a proportional symbols thematic layer.
+- Median rent prices, Median income, and the population by race will be visualized using a choropleth thematic layers.
+
 ##### The supporting data sets for each thematic map layer:
-- [Single-Family Home Sale Prices by Census Tract](https://data-seattlecitygis.opendata.arcgis.com/datasets/SeattleCityGIS::single-family-home-sale-prices-by-census-tract/explore?location=47.614125%2C-122.336870%2C10.89)
-- [Median Household Income by Census Tract in King County by Census Tract](https://gis-kingcounty.opendata.arcgis.com/datasets/kingcounty::median-household-income-1/explore?location=47.430392%2C-121.802498%2C10.67&showTable=true)
-- [Demographics of King County](https://gis-kingcounty.opendata.arcgis.com/datasets/kingcounty::demographic-base-demographic-base-area/explore?location=47.429699%2C-121.802498%2C10.11&showTable=true)
+- [Median Contract Rent by Census Tract](https://gis-kingcounty.opendata.arcgis.com/datasets/kingcounty::acs-median-contract-rent-dollars-acs-b25058-mediancontractrent/explore?location=47.430693%2C-121.809050%2C10.67&showTable=true)
+- [Basic demographics by Census Tracts in King County based on 2012 - 2016 American Community Survey 5 Year Average (includes population by race and median household income )](https://gis-kingcounty.opendata.arcgis.com/datasets/kingcounty::demographic-base-demographic-base-area/explore?location=47.428449%2C-121.802498%2C10.00&showTable=true)
 
 ##### Vector or raster layer. If it is a vector, which data attribute to use? If raster, which zoom level and presumed bounding box to use?
 We will have a vector layer and will use shape length and shape area of the census tracts as polygon boundaries.
 
 #### Proposed Interactive Functions
 - Have a pop-up description when hovering over areas of interest to show the information such as demographics and home sale-related information.
-- Have a slider that will allow users to see the sing-family home sale prices from 2006 to 2019.
+- Access supporting charts that give additional context about the map's thematic layer
+- include links to data sources on each map page
 
 #### How to arrange all the components on the graphical user interface (GUI)?
 - We plan to arrange our project’s introduction on our main page of the dashboard. We will then have tabs on the top right which users can click on to access other pages. We will create a separate map page which will display our main choropleth map visualization displaying Housing prices in King County. Here we will also include most of our interactive map elements. Next, we will have an “About Us” page introducing our project team and acknowledging the course teaching team. Then, we will have a tab citing the data sources that we used for our project. Other added pages we may include are additional maps and charts to highlight other attributes in our dataset.
