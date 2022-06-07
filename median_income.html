@@ -130,7 +130,7 @@
     <div id="map"></div>
     <div class="map-overlay"> <!-- Added this -->
         <div id="features"> <!-- Added this -->
-            <h2>Population by Race in King County by Census Tract</h2>
+            <h2>Median Household Income by Census Tract</h2>
             <div id='text-escription'>
                 <p>Choropleth Map Made by Huating Sun</p>
             </div> <!-- Added this -->
@@ -166,15 +166,15 @@
                         'fill-color': [
                             'step',
                             ['get', 'MHHI1'],
-                            "rgb(250, 250, 110)", 
+                            "rgba(239, 243, 255, 1)", 
                             63893, 
-                            "rgb(156, 223, 124)", 
+                            "rgba(189, 215, 231, 1)", 
                             83875,
-                            "rgb(74, 189, 140)",
+                            "rgba(107, 174, 214, 1)", 
                             100976,
-                            "rgb(0, 150, 142)",
+                            "rgba(49, 130, 189, 1)", 
                             119527,
-                            "rgb(16, 110, 124)",
+                            "rgba(8, 81, 156, 1)",
                             222500,
                             "rgb(160, 160, 160)", 
                         ],
@@ -192,11 +192,11 @@
                     'Missing Data',
                 ];
                 const colors = [
-                  "rgb(250, 250, 110)",
-                  "rgb(156, 223, 124)",
-                  "rgb(74, 189, 140)",
-                  "rgb(0, 150, 142)",
-                  "rgb(16, 110, 124)",
+                  "rgba(239, 243, 255, 1)", 
+                  "rgba(189, 215, 231, 1)", 
+                  "rgba(107, 174, 214, 1)", 
+                  "rgba(49, 130, 189, 1)", 
+                  "rgba(8, 81, 156, 1)",
                   "rgb(160, 160, 160)"
                 ];
 
