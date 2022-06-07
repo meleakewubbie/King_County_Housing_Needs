@@ -52,8 +52,8 @@ We will have a vector layer and will use shape length and shape area of the cens
 ##### Javascript that supports the making of a chart
 We will be using C3.js in order to make the chart.
 ##### Type of chart
-Some bar charts and line charts will be created
+The type of charts we will be implenting into our project are bar charts
 ##### Data Attributes to be Visualized
-- A line graph will visualize the trend of average nominal price change and average nominal of single-family houses over the years. 
-- A bar graph will visualize the number of single-family house sales per year. 
-- The trend of the average sale price per square foot and average sale price per square foot change of single-family houses over the years.
+- A stacked bar graph will visualize the median income by non-white tracts in King County.
+- A a stacked bar graph will visualize the median estimated yearly contract rent by income for King County
+- A stacked bar chart will visualize the median monthly contract rent by race or King County
